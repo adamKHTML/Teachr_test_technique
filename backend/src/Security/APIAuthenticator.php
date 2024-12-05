@@ -11,15 +11,15 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager; // Importer la classe JWTManager
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager; 
 
 class APIAuthenticator extends AbstractAuthenticator
 {
-    private JWTManager $jwtManager;  // Déclarer une propriété pour le service JWTManager
+    private JWTManager $jwtManager; 
 
     public function __construct(JWTManager $jwtManager)
     {
-        $this->jwtManager = $jwtManager;  // Injection du service JWTManager
+        $this->jwtManager = $jwtManager;  
     }
 
     public function supports(Request $request): ?bool
@@ -35,7 +35,7 @@ class APIAuthenticator extends AbstractAuthenticator
 
     public function createToken(Passport $passport, string $firewallName): TokenInterface
     {
-        // Créez un token authentifié avec les informations du passeport
+        
         return new PreAuthenticatedToken(
             $passport->getUser(),
             $firewallName,
@@ -51,7 +51,7 @@ class APIAuthenticator extends AbstractAuthenticator
             return new JsonResponse(['message' => 'User not found.'], Response::HTTP_UNAUTHORIZED);
         }
 
-        // Créer un JWT avec les informations utilisateur (incluant firstName)
+        
         $userData = [
             'roles' => $user->getRoles(),
             'email' => $user->getEmail(),
@@ -59,13 +59,13 @@ class APIAuthenticator extends AbstractAuthenticator
             'lastName' => $user->getLastName(),
         ];
 
-        // Créer le token JWT
-        $jwt = $this->jwtManager->create($user);  // Cette méthode utilise le User pour générer un token
+       
+        $jwt = $this->jwtManager->create($user);  
 
         return new JsonResponse([
             'message' => 'Authentication successful.',
-            'token' => $jwt,  // Retourner le token dans la réponse
-            'user' => $userData  // Vous pouvez aussi retourner les informations supplémentaires de l'utilisateur
+            'token' => $jwt,  
+            'user' => $userData  
         ], Response::HTTP_OK);
     }
 

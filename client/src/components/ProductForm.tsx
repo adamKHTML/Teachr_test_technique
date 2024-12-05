@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useCreateProductMutation, useUpdateProductMutation } from '../api/endpoints/product';
 import { useGetCategoriesQuery } from '../api/endpoints/category';
 
+
+// l'ajout de produit marche mais pas la mise à jour (pour l'instant)
+
 interface ProductFormProps {
     onClose: () => void;
     product?: {
@@ -11,6 +14,14 @@ interface ProductFormProps {
         price: number;
         category: string;
         image: string | null;
+    };
+}
+
+interface RTKError {
+    status: number;
+    data: {
+        message?: string;
+        errors?: string[];
     };
 }
 
@@ -83,20 +94,30 @@ const ProductForm: React.FC<ProductFormProps> = ({ onClose, product }) => {
         }
 
         if (product) {
-            productData.append('id', product.id.toString()); // Ajoute l'ID si on est en mode édition
+            productData.append('id', product.id.toString());
+            try {
+                const response = await updateProduct(productData).unwrap();
+                console.log('Produit mis à jour:', response);
+            } catch (error) {
+                const err = error as RTKError;
+                if (err.data && err.data.errors) {
+                    console.error('Erreur de validation:', err.data.errors);
+                } else {
+                    console.error('Erreur serveur:', err);
+                }
+            }
+        } else {
+            try {
+                await createProduct(productData).unwrap();
+            } catch (error) {
+                const err = error as RTKError;
+                console.error('Erreur lors de la création du produit:', err);
+            }
         }
 
-        try {
-            if (product) {
-                await updateProduct(productData).unwrap();
-            } else {
-                await createProduct(productData).unwrap();
-            }
-            onClose();
-        } catch (error) {
-            console.error('Erreur lors de l\'enregistrement du produit:', error);
-        }
+        onClose();
     };
+
 
     if (isLoadingCategories) {
         return <div>Chargement des catégories...</div>;

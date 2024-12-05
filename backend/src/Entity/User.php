@@ -102,11 +102,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return string The hashed password
+     * @return string 
      */
     public function getPassword(): string
     {
-        return $this->password; // Retourne une chaîne non nullable
+        return $this->password;
     }
 
     public function setPassword(string $password): static
@@ -137,7 +137,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeProduct(Product $product): static
     {
         if ($this->products->removeElement($product)) {
-            // Set the owning side to null (unless already changed)
+           
             if ($product->getUser() === $this) {
                 $product->setUser(null);
             }
@@ -156,8 +156,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function eraseCredentials(): void
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+       
     }
 
     public function getRoles(): array

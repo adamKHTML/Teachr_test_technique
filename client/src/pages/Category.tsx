@@ -25,18 +25,18 @@ const Category: React.FC = () => {
         e.preventDefault();
 
         if (formData.id) {
-            // Modifier une catégorie existante
+
             await updateCategory(formData);
         } else {
-            // Ajouter une nouvelle catégorie
+
             await createCategory({ name: formData.name });
         }
 
-        setFormData({ id: undefined, name: '' }); // Réinitialiser le formulaire
+        setFormData({ id: undefined, name: '' });
     };
 
     const handleEditClick = (category: { id: number; name: string }) => {
-        setFormData(category); // Préremplir le formulaire avec les données de la catégorie à modifier
+        setFormData(category);
     };
 
     const handleDeleteClick = async (id: number) => {

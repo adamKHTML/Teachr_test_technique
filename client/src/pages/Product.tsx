@@ -19,9 +19,8 @@ const Product: React.FC = () => {
     });
 
     const productList = Array.isArray(productsData) ? productsData : productsData?.products || [];
-    const categories = Array.isArray(productsData)
-        ? [...new Set(productList.map((product) => product.category))]  // Extraction des catégories uniques
-        : [];
+
+
 
     const getImageSrc = (image: string | null) => {
         const basePath = 'http://localhost:8000';
@@ -31,26 +30,29 @@ const Product: React.FC = () => {
     };
 
     const handleFilterChange = (newFilters: typeof filters) => {
-        setFilters(newFilters);
+        setFilters(newFilters); // Mise à jour des filtres
     };
 
     const filteredProducts = productList
         .filter((product) => {
-            if (filters.category && product.category !== filters.category) return false;
+            if (filters.category && product.category !== filters.category) {
+                return false;
+            }
             if (filters.priceFilter) {
-                if (filters.priceFilter === 'asc') return product.price; // Tri ascendant
-                if (filters.priceFilter === 'desc') return -product.price; // Tri descendant
-                if (filters.priceFilter === '15' && product.price > 15) return false; // Moins de 15€
-                if (filters.priceFilter === '30' && product.price > 30) return false; // Moins de 30€
+                if (filters.priceFilter === '15' && product.price > 15) return false;
+                if (filters.priceFilter === '30' && product.price > 30) return false;
             }
             return true;
         })
         .sort((a, b) => {
-            if (filters.priceFilter === 'asc') return a.price - b.price; // Ascendant
-            if (filters.priceFilter === 'desc') return b.price - a.price; // Descendant
+            if (filters.priceFilter === 'asc') return a.price - b.price;
+            if (filters.priceFilter === 'desc') return b.price - a.price;
 
-            if (filters.dateOrder === 'recent') return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-            if (filters.dateOrder === 'old') return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+            const dateA = new Date(a.createdAt);
+            const dateB = new Date(b.createdAt);
+
+            if (filters.dateOrder === 'recent') return dateB.getTime() - dateA.getTime();
+            if (filters.dateOrder === 'old') return dateA.getTime() - dateB.getTime();
 
             return 0;
         });
@@ -69,18 +71,15 @@ const Product: React.FC = () => {
             <div className="container mx-auto px-4 py-6">
                 <h2 className="text-2xl font-semibold text-gray-800 mb-6">Liste des produits</h2>
 
+                {/* Passer les catégories et la fonction de mise à jour des filtres */}
                 <Filter
-                    categories={categories.map((category, index) => ({ id: index.toString(), name: category }))}
                     onFilterChange={handleFilterChange}
                 />
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {filteredProducts.length > 0 ? (
                         filteredProducts.map((product) => (
-                            <div
-                                key={product.id}
-                                className="group relative border rounded-lg overflow-hidden shadow-lg"
-                            >
+                            <div key={product.id} className="group relative border rounded-lg overflow-hidden shadow-lg">
                                 <div className="relative h-56 w-full">
                                     <img
                                         src={getImageSrc(product.image)}
@@ -94,13 +93,10 @@ const Product: React.FC = () => {
                                         <span className="text-lg font-semibold text-blue-500">${product.price}</span>
                                     </div>
                                     <div className="text-sm text-gray-500 mt-2">{product.category}</div>
-                                    <div className="text-sm text-gray-500 mt-2 opacity-0">{product.createdAt}</div> {/* Date cachée */}
+                                    <div className="text-sm text-gray-500 mt-2">{new Date(product.createdAt).toLocaleDateString()}</div>
                                 </div>
                                 <div className="absolute inset-0 bg-gray-800 bg-opacity-50 opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out flex items-center justify-center">
-                                    <Link
-                                        to={`/product/edit/${product.id}`}
-                                        className="text-white font-semibold text-xl"
-                                    >
+                                    <Link to={`/product/edit/${product.id}`} className="text-white font-semibold text-xl">
                                         Plus en détails
                                     </Link>
                                 </div>

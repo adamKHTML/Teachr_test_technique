@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useGetCategoriesQuery } from '../api/endpoints/category';
 
 interface FilterProps {
-    categories: { id: string; name: string }[];
     onFilterChange: (filters: {
         category?: string;
         priceFilter?: string;
@@ -16,15 +15,17 @@ const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
         priceFilter: '',
         dateOrder: undefined as 'recent' | 'old' | undefined,
     });
+
     const { data: categoriesData } = useGetCategoriesQuery();
+    const categoryList = Array.isArray(categoriesData) ? categoriesData : categoriesData?.categories || [];
+
+    useEffect(() => {
+        onFilterChange(filters);
+    }, [filters, onFilterChange]);
 
     const handleFilterChange = (field: string, value: string) => {
-        const newFilters = { ...filters, [field]: value };
-        setFilters(newFilters);
-        onFilterChange(newFilters);
+        setFilters((prev) => ({ ...prev, [field]: value }));
     };
-
-    const categoryList = Array.isArray(categoriesData) ? categoriesData : categoriesData?.categories || [];
 
     return (
         <div className="flex flex-wrap gap-4 mb-6">
@@ -36,13 +37,13 @@ const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
             >
                 <option value="">Toutes les catégories</option>
                 {categoryList.map((category) => (
-                    <option key={category.id} value={category.id}>
+                    <option key={category.id} value={category.name}>
                         {category.name}
                     </option>
                 ))}
             </select>
 
-            {/* Filtre combiné pour tri et limite de prix */}
+            {/* Filtre combiné pour le tri et la limite des prix */}
             <select
                 className="border p-2 rounded"
                 value={filters.priceFilter}

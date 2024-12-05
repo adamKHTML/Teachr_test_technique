@@ -6,13 +6,14 @@ use App\Entity\Category;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request; // <=== Import correct ici
-use Symfony\Component\HttpFoundation\Response; // <=== Import de Response pour le code HTTP
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CategoryController extends AbstractController
-{
+{ 
+     // Route pour obtenir les catégories
     #[Route('/api/categories', methods: ['GET'])]
     public function index(EntityManagerInterface $em): JsonResponse
     {
@@ -28,10 +29,11 @@ class CategoryController extends AbstractController
         return new JsonResponse(['categories' => $categoriesArray]);
     }
 
+     // Route pour ajouter  des catégories 
     #[Route('/api/categories', methods: ['POST'])]
     public function createCategory(Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
-        $data = json_decode($request->getContent(), true); // Lecture des données JSON
+        $data = json_decode($request->getContent(), true); 
 
         if (empty($data['name'])) {
             return new JsonResponse(['error' => 'Category name is required'], Response::HTTP_BAD_REQUEST);
@@ -46,6 +48,7 @@ class CategoryController extends AbstractController
         return new JsonResponse(['message' => 'Category created successfully'], Response::HTTP_CREATED);
     }
 
+     // Route pour mettre à jour des catégories
     #[Route('/api/categories/{id}', methods: ['PUT'])]
     public function updateCategory(int $id, Request $request, CategoryRepository $categoryRepository, EntityManagerInterface $entityManager): JsonResponse
     {
@@ -54,7 +57,7 @@ class CategoryController extends AbstractController
             return new JsonResponse(['message' => 'Category not found'], Response::HTTP_NOT_FOUND);
         }
 
-        $data = json_decode($request->getContent(), true); // Lecture des données JSON
+        $data = json_decode($request->getContent(), true); 
 
         if (empty($data['name'])) {
             return new JsonResponse(['error' => 'Category name is required'], Response::HTTP_BAD_REQUEST);
@@ -66,6 +69,7 @@ class CategoryController extends AbstractController
         return new JsonResponse(['message' => 'Category updated successfully']);
     }
 
+     // Route pour supprimer des catégories
     #[Route('/api/categories/{id}', methods: ['DELETE'])]
     public function deleteCategory(int $id, CategoryRepository $categoryRepository, EntityManagerInterface $entityManager): JsonResponse
     {

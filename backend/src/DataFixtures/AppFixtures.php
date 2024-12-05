@@ -25,18 +25,18 @@ class AppFixtures extends Fixture
         $this->createUser($manager, 'bob@example.com', 'Bob', 'Johnson', 'pass_5678');
         $this->createUser($manager, 'charlie@example.com', 'Charlie', 'Williams', 'pass_9012');
 
-        // Ajout des catégories diversifiées
+        // Ajout des catégories 
         $this->createCategory($manager, 'Fruits');
         $this->createCategory($manager, 'Légumes');
         $this->createCategory($manager, 'Boissons');
         $this->createCategory($manager, 'Produits laitiers');
-        $this->createCategory($manager, 'Électroménager'); // Catégorie diversifiée
-        $this->createCategory($manager, 'Vêtements'); // Catégorie diversifiée
+        $this->createCategory($manager, 'Électroménager'); 
+        $this->createCategory($manager, 'Vêtements');
 
         $manager->flush();
     }
 
-    // Méthode pour créer un utilisateur avec le rôle 'ROLE_USER'
+   
     private function createUser(ObjectManager $manager, string $email, string $firstName, string $lastName, string $plainPassword): void
     {
         $user = new User();
@@ -48,18 +48,18 @@ class AppFixtures extends Fixture
         $password = $this->hasher->hashPassword($user, $plainPassword);
         $user->setPassword($password);
 
-        // Attribution du rôle 'ROLE_USER' uniquement
+       
         $user->setRoles(['ROLE_USER']);
 
-        $manager->persist($user); // Persister l'utilisateur
+        $manager->persist($user); 
     }
 
-    // Méthode pour créer une catégorie
+    
     private function createCategory(ObjectManager $manager, string $name): void
     {
         $category = new Category();
         $category->setName($name);
 
-        $manager->persist($category); // Persister la catégorie
+        $manager->persist($category); 
     }
 }

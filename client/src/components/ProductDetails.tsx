@@ -35,11 +35,11 @@ const ProductDetail: React.FC = () => {
     };
 
     const handleUpdateProduct = () => {
-        setIsEditing(true); // Active le mode édition
+        setIsEditing(true);
     };
 
     const handleCloseForm = () => {
-        setIsEditing(false); // Désactive le mode édition
+        setIsEditing(false);
     };
 
     return (

@@ -19,7 +19,7 @@ export interface CreateProductRequest {
     description: string;
     price: number;
     category: string;
-    image?: File | null;
+    image: string | null;
 }
 
 export interface UpdateProductRequest {
@@ -57,7 +57,7 @@ export const productApi = apiSlice.injectEndpoints({
                 }
                 return {
                     url: `/api/products/${id}`,
-                    method: 'POST',
+                    method: 'PUT',
                     body: formData,
                 };
             },

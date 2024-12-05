@@ -21,7 +21,7 @@ const Dashboard: React.FC = () => {
             <div className="min-h-screen flex flex-col justify-center items-center p-8">
                 <div className="bg-white p-8 w-full max-w-3xl text-center">
                     <h1 className="text-3xl font-semibold mb-6 text-[#1e4f9b]">
-                        Bienvenue à vous, {userData?.firstName || 'Utilisateur'} {/* Affiche le firstName */}
+                        Bienvenue à vous, {userData?.firstName || 'Utilisateur'}
                     </h1>
                     <p className="text-black mb-8">
                         Nous sommes ravis de vous voir ici. Choisissez une option ci-dessous pour commencer.
