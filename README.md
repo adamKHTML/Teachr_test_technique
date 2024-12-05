@@ -1,5 +1,17 @@
 # Projet Teach'r - Test Technique
 
+## Utilisation : 
+
+Vous pouvez consultez cette vidéo youtube explicative : https://youtu.be/FL9PImBj3oE 
+
+Aussi bon à savoir les utilisateurs et les mot de passe pour se connecter : 
+
+- `email : alan@alan.fr`  `mot de passe : pass_1234`
+- `email : alice@example.com` `mot de passe : pass_1234`
+- `email : bob@example.com`  `mot de passe : pass_5678`
+- `email : charlie@example.com` `mot de passe : pass_9012`
+
+
 ## Présentation de l'application
 
 L'application **Teach'r** est une plateforme permettant de gérer des produits et leurs catégories, avec une interface frontend réalisée en React et un backend en Symfony. Elle offre des fonctionnalités d'ajout, de modification, de suppression et de filtrage des produits et des catégories. L'authentification est sécurisée via JSON Web Token (JWT) pour protéger les endpoints sensibles.
@@ -109,6 +121,7 @@ Authentification : JWT (JSON Web Token)
 
 La base de données de l'application est constituée de plusieurs tables essentielles : **category**, **product**, **user**, et quelques autres pour la gestion de l'API et des migrations.
 
+
 ### Tables principales :
 
 #### 1. Utilisateur (`user`)
@@ -150,8 +163,11 @@ La base de données de l'application est constituée de plusieurs tables essenti
 
 Un diagramme relationnel de la base de données pourrait illustrer les relations suivantes :
 
+![Untitled diagram-2024-12-05-175234](https://github.com/user-attachments/assets/0ec80549-a742-4095-ac4d-40d7d915b97a)
+
 - **Produit** -> **Utilisateur** (relation plusieurs à un)
 - **Produit** -> **Catégorie** (relation plusieurs à un)
+  
   
 Ainsi, chaque produit appartient à une catégorie et est créé par un utilisateur. Un utilisateur peut créer plusieurs produits, mais chaque produit n'appartient qu'à une seule catégorie.
 
@@ -179,17 +195,61 @@ Lorsqu'un utilisateur envoie une requête POST à l’endpoint /api/login avec s
 Filtrage des produits par catégorie.
 Tri des produits par prix (croissant/décroissant) et par date (récent/ancien).
 
-## Diagramme de séquence : Login et récupération du JWT
+## Diagramme de séquence des Échanges API
 
-![Untitled diagram-2024-11-23-171348](https://github.com/user-attachments/assets/e7f321df-ddfd-4261-9d18-e2c8f6a252e6)
+![Untitled diagram-2024-12-05-175514](https://github.com/user-attachments/assets/61cf665c-90bc-47f2-aa13-c78bb7890e02)
+
 
 ## Charte graphique 
 
-Pour la charte graphique et la typographie, je me suis inspiré du site Teach'r, tout en y ajoutant ma propre touche pour refléter la dimension produit. Voici les inspirations qui m'ont guidé dans ce processus. 
+Pour la charte graphique et la typographie, je me suis inspiré du site Teach'r, tout en y ajoutant ma propre touche pour refléter la dimension produit. Voici les inspirations qui m'ont guidé dans ce processus :
 
-## Wirerames  - Maquette
 
-![Group 1 (3)](https://github.com/user-attachments/assets/1a520afd-d3dc-4edf-81ef-b3dd19582507)
+### Inspirations 
+
+![Capture d'écran 2024-12-03 112243](https://github.com/user-attachments/assets/ab83d2f7-9f13-4b11-8c09-948ffce1af44)
+
+![Capture d'écran 2024-12-03 112749](https://github.com/user-attachments/assets/3f64ed26-9164-4295-945c-34164c6047e3)
+
+#### Charte Graphique -
+![Group 1](https://github.com/user-attachments/assets/7b3968f6-2534-446d-8f3c-9bc757098db1)
+
+#### Logo 
+
+![Group 3](https://github.com/user-attachments/assets/8a2562f6-8929-47eb-a2a9-c882e9ece5db)
+
+## Maquette des pages 
+
+#### Page d'Accueil - 
+
+![Capture d'écran 2024-12-05 172057](https://github.com/user-attachments/assets/0272e306-2468-4688-afa3-ebd9a060f46d)
+
+
+#### Page Connexion - 
+
+![Capture d'écran 2024-12-04 213923](https://github.com/user-attachments/assets/ea788324-d2eb-48ad-bbbb-866097eb63b7)
+
+
+
+#### Page Dashboard - 
+
+![Capture d'écran 2024-12-05 172746](https://github.com/user-attachments/assets/c7350bc2-ac7c-483a-8526-99fc596f4624)
+
+
+#### Page Catégorie -
+
+![Capture d'écran 2024-12-05 172943](https://github.com/user-attachments/assets/8e3c725b-d481-4158-8891-340c7f6c83dc)
+
+
+
+#### Page Produit - 
+
+![Capture d'écran 2024-12-05 172843](https://github.com/user-attachments/assets/0e95c8ef-80d8-4a49-adbb-78675109c686)
+
+![Capture d'écran 2024-12-05 172905](https://github.com/user-attachments/assets/7634a5d7-7107-4632-a403-5468ef76890b)
+
+
+
 
 ## Problèmes connus
 Mise à jour des produits : Actuellement, la mise à jour des produits n'est pas opérationnelle. Ce problème est en cours de résolution.
