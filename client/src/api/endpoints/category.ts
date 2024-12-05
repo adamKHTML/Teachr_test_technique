@@ -1,24 +1,22 @@
 import { apiSlice } from "../apiSlice";
 
-interface Category {
+export interface Category {
     id: number;
     name: string;
 }
 
-interface CategoryResponse {
+export interface CategoryResponse {
     categories: Category[];
 }
 
-interface CreateCategoryRequest {
+export interface CreateCategoryRequest {
     name: string;
 }
 
-interface UpdateCategoryRequest {
+export interface UpdateCategoryRequest {
     id: number;
     name: string;
 }
-
-
 
 export const categoryApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
@@ -26,28 +24,28 @@ export const categoryApi = apiSlice.injectEndpoints({
             query: () => '/api/categories',
             providesTags: [{ type: 'Category', id: 'LIST' }],
         }),
-        createCategory: builder.mutation<Category, CreateCategoryRequest>({
-            query: (categoryData) => ({
+        createCategory: builder.mutation<void, CreateCategoryRequest>({
+            query: (body) => ({
                 url: '/api/categories',
                 method: 'POST',
-                body: categoryData,
+                body,
             }),
-            invalidatesTags: ['Category'],
+            invalidatesTags: [{ type: 'Category', id: 'LIST' }],
         }),
-        updateCategory: builder.mutation<Category, UpdateCategoryRequest>({
-            query: (categoryData) => ({
-                url: `/api/categories/${categoryData.id}`,
+        updateCategory: builder.mutation<void, UpdateCategoryRequest>({
+            query: ({ id, name }) => ({
+                url: `/api/categories/${id}`,
                 method: 'PUT',
-                body: categoryData,
+                body: { name },
             }),
-            invalidatesTags: ['Category'],
+            invalidatesTags: [{ type: 'Category', id: 'LIST' }],
         }),
         deleteCategory: builder.mutation<void, number>({
             query: (id) => ({
                 url: `/api/categories/${id}`,
                 method: 'DELETE',
             }),
-            invalidatesTags: ['Category'],
+            invalidatesTags: [{ type: 'Category', id: 'LIST' }],
         }),
     }),
 });

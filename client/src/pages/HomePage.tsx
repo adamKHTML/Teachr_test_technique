@@ -21,7 +21,7 @@ const HomePage: React.FC = () => {
                     <p className="homepage-description">
                         Bienvenue sur notre plateforme ! Avec l’application e-commerce de Teach'r, vous pouvez
                         <strong> gérer facilement vos produits et leurs catégories</strong>.
-                        En quelques clics, accédez à un tableau de bord intuitif pour :
+                        En quelques clics.
                     </p>
                 </div>
             </div>

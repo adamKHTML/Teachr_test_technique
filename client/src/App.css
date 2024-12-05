@@ -69,11 +69,17 @@ svg {
 .homepage-title {
   font-weight: bold;
   text-align: center;
+  font-size: 22px;
+  margin: 35px;
   
 }
 
 .homepage-description {
-  text-align: justify;
+  text-align: left;
+  font-size: 22px;
+  font-weight: 500;
+  margin: 25px;
+padding: 40px;
 }
 
 
@@ -109,4 +115,8 @@ svg {
 
 .Navbar-header .space-x-4 > * {
   margin-left: 16px;
+}
+
+.section {
+  padding: 80px;
 }

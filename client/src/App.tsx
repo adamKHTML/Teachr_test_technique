@@ -10,6 +10,7 @@ import Dashboard from './pages/Dashboard';
 import Homepage from './pages/HomePage';
 import Product from './pages/Product';
 import ProductDetail from './components/ProductDetails';
+import Category from './pages/Category';
 
 
 const App: React.FC = () => {
@@ -22,6 +23,8 @@ const App: React.FC = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path='/products' element={<Product />} />
           <Route path='/product/edit/:id' element={<ProductDetail />} />
+          <Route path='/categories' element={<Category />} />
+
 
 
         </Routes>

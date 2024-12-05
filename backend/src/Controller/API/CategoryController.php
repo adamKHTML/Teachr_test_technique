@@ -6,6 +6,8 @@ use App\Entity\Category;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request; // <=== Import correct ici
+use Symfony\Component\HttpFoundation\Response; // <=== Import de Response pour le code HTTP
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -29,7 +31,7 @@ class CategoryController extends AbstractController
     #[Route('/api/categories', methods: ['POST'])]
     public function createCategory(Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
-        $data = $request->request->all();
+        $data = json_decode($request->getContent(), true); // Lecture des données JSON
 
         if (empty($data['name'])) {
             return new JsonResponse(['error' => 'Category name is required'], Response::HTTP_BAD_REQUEST);
@@ -52,7 +54,7 @@ class CategoryController extends AbstractController
             return new JsonResponse(['message' => 'Category not found'], Response::HTTP_NOT_FOUND);
         }
 
-        $data = $request->request->all();
+        $data = json_decode($request->getContent(), true); // Lecture des données JSON
 
         if (empty($data['name'])) {
             return new JsonResponse(['error' => 'Category name is required'], Response::HTTP_BAD_REQUEST);
