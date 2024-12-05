@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql-teachr
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: Teachrtest
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - app_network
+
+  app:
+    build: .
+    container_name: teachr-app
+    environment:
+      DATABASE_URL: "mysql://root:root@db:3306/Teachrtest?charset=utf8mb4"
+    ports:
+      - "8000:8000"  
+    depends_on:
+      - db
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
+
+volumes:
+  db_data:
+    driver: local
